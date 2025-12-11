@@ -1,6 +1,10 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "API Documentation",
+  "logo": {
+    "light": "/logo.png",
+    "dark": "/logo_dark_mode.png"
+  },
   "favicon": "/chess_favicon.png",
   "api": {
     "baseUrl": "https://api.chessplay.io"
