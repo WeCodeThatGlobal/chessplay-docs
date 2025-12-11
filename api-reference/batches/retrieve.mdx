@@ -1,0 +1,52 @@
+---
+title: "Get Batch"
+api: "GET /api/v1/batches/{id}/"
+description: "Retrieve a specific batch"
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  Batch ID
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.chessplay.io/api/v1/batches/1/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+response = requests.get(
+    "https://api.chessplay.io/api/v1/batches/1/",
+    headers=headers
+)
+batch = response.json()
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.chessplay.io/api/v1/batches/1/', {
+  headers: { 'Authorization': 'Bearer YOUR_ACCESS_TOKEN' }
+});
+const batch = await response.json();
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Success
+{
+  "id": 1,
+  "name": "Beginner Batch",
+  "coach": {...},
+  "students": [...],
+  "student_count": 15
+}
+```
+
+</ResponseExample>

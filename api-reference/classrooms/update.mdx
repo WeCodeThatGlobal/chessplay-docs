@@ -1,0 +1,75 @@
+---
+title: "Update Classroom"
+api: "PATCH /api/v1/classrooms/{id}/"
+description: "Update classroom information"
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  Classroom ID
+</ParamField>
+
+## Body Parameters
+
+<ParamField body="name" type="string">
+  Classroom name
+</ParamField>
+
+<ParamField body="description" type="string">
+  Classroom description
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl -X PATCH https://api.chessplay.io/api/v1/classrooms/1/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Updated Name"}'
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+data = {"name": "Updated Name"}
+
+response = requests.patch(
+    "https://api.chessplay.io/api/v1/classrooms/1/",
+    headers=headers,
+    json=data
+)
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.chessplay.io/api/v1/classrooms/1/', {
+  method: 'PATCH',
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ name: 'Updated Name' })
+});
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Success
+{
+  "id": 1,
+  "name": "Updated Name",
+  "description": "Introduction to chess",
+  "coach": {...},
+  "students": [],
+  "start_time": "2024-01-20T10:00:00Z",
+  "end_time": "2024-01-20T11:00:00Z",
+  "created": "2024-01-15T10:30:00Z"
+}
+```
+
+</ResponseExample>
+
+<Warning>Admin only</Warning>

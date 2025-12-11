@@ -1,0 +1,58 @@
+---
+title: "List Batches"
+api: "GET /api/v1/batches/"
+description: "Retrieve a paginated list of all batches"
+---
+
+## Authentication
+
+<ParamField header="Authorization" type="string" required>
+  Bearer token for authentication
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="search" type="string">
+  Search batches by name
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.chessplay.io/api/v1/batches/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+response = requests.get(
+    "https://api.chessplay.io/api/v1/batches/",
+    headers=headers
+)
+batches = response.json()
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Success
+{
+  "count": 5,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "name": "Beginner Batch",
+      "coach": {...},
+      "students": [...],
+      "student_count": 15
+    }
+  ]
+}
+```
+
+</ResponseExample>

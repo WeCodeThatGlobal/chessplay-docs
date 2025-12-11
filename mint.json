@@ -1,0 +1,69 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "API Documentation",
+  "favicon": "/chess_favicon.png",
+  "api": {
+    "baseUrl": "https://api.chessplay.io"
+  },
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373"
+  },
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction",
+        "authentication",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/overview"
+      ]
+    },
+    {
+      "group": "Students",
+      "pages": [
+        "api-reference/students/list",
+        "api-reference/students/create",
+        "api-reference/students/retrieve",
+        "api-reference/students/update",
+        "api-reference/students/delete"
+      ]
+    },
+    {
+      "group": "Classrooms",
+      "pages": [
+        "api-reference/classrooms/list",
+        "api-reference/classrooms/create",
+        "api-reference/classrooms/retrieve",
+        "api-reference/classrooms/update",
+        "api-reference/classrooms/delete",
+        "api-reference/classrooms/add-student",
+        "api-reference/classrooms/remove-student"
+      ]
+    },
+    {
+      "group": "Batches",
+      "pages": [
+        "api-reference/batches/list",
+        "api-reference/batches/create",
+        "api-reference/batches/retrieve",
+        "api-reference/batches/update",
+        "api-reference/batches/delete",
+        "api-reference/batches/add-student",
+        "api-reference/batches/remove-student"
+      ]
+    },
+    {
+      "group": "Resources",
+      "pages": [
+        "errors"
+      ]
+    }
+  ]
+}

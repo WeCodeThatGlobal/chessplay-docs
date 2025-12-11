@@ -1,0 +1,101 @@
+---
+title: "Get Student"
+api: "GET /api/v1/students/{id}/"
+description: "Retrieve a specific student by ID"
+---
+
+## Authentication
+
+<ParamField header="Authorization" type="string" required>
+  Bearer token for authentication
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  Student ID
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="integer">
+  Student ID
+</ResponseField>
+
+<ResponseField name="username" type="string">
+  Student's username
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Student's email
+</ResponseField>
+
+<ResponseField name="phone_number" type="string">
+  Student's phone number
+</ResponseField>
+
+<ResponseField name="first_name" type="string">
+  Student's first name
+</ResponseField>
+
+<ResponseField name="last_name" type="string">
+  Student's last name
+</ResponseField>
+
+<ResponseField name="public_report_id" type="string">
+  Public UUID for reports
+</ResponseField>
+
+<ResponseField name="created" type="string">
+  Creation timestamp
+</ResponseField>
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.chessplay.io/api/v1/students/123/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+response = requests.get(
+    "https://api.chessplay.io/api/v1/students/123/",
+    headers=headers
+)
+student = response.json()
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.chessplay.io/api/v1/students/123/', {
+  headers: { 'Authorization': 'Bearer YOUR_ACCESS_TOKEN' }
+});
+const student = await response.json();
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Success
+{
+  "id": 123,
+  "username": "FastMalamute",
+  "email": "john.doe@example.com",
+  "phone_number": "+1234567890",
+  "first_name": "John",
+  "last_name": "Doe",
+  "public_report_id": "abc-123-def-456",
+  "created": "2024-01-15T10:30:00Z"
+}
+```
+
+```json 404 Not Found
+{
+  "detail": "Not found."
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,70 @@
+---
+title: "Update Batch"
+api: "PATCH /api/v1/batches/{id}/"
+description: "Update batch information"
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  Batch ID
+</ParamField>
+
+## Body Parameters
+
+<ParamField body="name" type="string">
+  Batch name
+</ParamField>
+
+<ParamField body="coach_id" type="integer">
+  Coach ID
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl -X PATCH https://api.chessplay.io/api/v1/batches/1/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Updated Batch"}'
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+data = {"name": "Updated Batch"}
+
+response = requests.patch(
+    "https://api.chessplay.io/api/v1/batches/1/",
+    headers=headers,
+    json=data
+)
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.chessplay.io/api/v1/batches/1/', {
+  method: 'PATCH',
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ name: 'Updated Batch' })
+});
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Success
+{
+  "id": 1,
+  "name": "Updated Batch",
+  "coach": {...}
+}
+```
+
+</ResponseExample>
+
+<Warning>Admin only</Warning>

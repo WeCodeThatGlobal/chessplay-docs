@@ -1,0 +1,111 @@
+---
+title: Authentication
+description: 'How to authenticate your API requests'
+---
+
+## Overview
+
+All API endpoints require JWT authentication. Get a token by logging in, then include it in all requests.
+
+## Step 1: Get Your Token
+
+Login with your credentials:
+
+```bash
+curl -X POST https://api.chessplay.io/api/token/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "your_username",
+    "password": "your_password"
+  }'
+```
+
+Response:
+
+```json
+{
+  "access": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGc..."
+}
+```
+
+## Step 2: Use Your Token
+
+Include the access token in all API requests:
+
+```bash
+curl -X GET https://api.chessplay.io/api/v1/students/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+## Code Examples
+
+<CodeGroup>
+
+```python Python
+import requests
+
+# Login
+response = requests.post('https://api.chessplay.io/api/token/', json={
+    'username': 'your_username',
+    'password': 'your_password'
+})
+token = response.json()['access']
+
+# Use token
+headers = {'Authorization': f'Bearer {token}'}
+response = requests.get('https://api.chessplay.io/api/v1/students/', headers=headers)
+```
+
+```javascript JavaScript
+// Login
+const loginResponse = await fetch('https://api.chessplay.io/api/token/', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    username: 'your_username',
+    password: 'your_password'
+  })
+});
+const { access } = await loginResponse.json();
+
+// Use token
+const response = await fetch('https://api.chessplay.io/api/v1/students/', {
+  headers: { 'Authorization': `Bearer ${access}` }
+});
+```
+
+</CodeGroup>
+
+## Refresh Token
+
+When your access token expires, use the refresh token:
+
+```bash
+curl -X POST https://api.chessplay.io/api/token/refresh/ \
+  -H "Content-Type: application/json" \
+  -d '{"refresh": "YOUR_REFRESH_TOKEN"}'
+```
+
+
+## Common Errors
+
+### 401 Unauthorized
+
+```json
+{
+  "detail": "Authentication credentials were not provided."
+}
+```
+
+**Solution**: Include the Authorization header with your token.
+
+### Token Expired
+
+```json
+{
+  "detail": "Token is expired"
+}
+```
+
+**Solution**: Use your refresh token to get a new access token.

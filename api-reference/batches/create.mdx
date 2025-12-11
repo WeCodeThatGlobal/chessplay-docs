@@ -1,0 +1,55 @@
+---
+title: "Create Batch"
+api: "POST /api/v1/batches/"
+description: "Create a new batch"
+---
+
+## Body Parameters
+
+<ParamField body="name" type="string" required>
+  Batch name
+</ParamField>
+
+<ParamField body="coach_id" type="integer" required>
+  Coach ID
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.chessplay.io/api/v1/batches/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Advanced Batch", "coach_id": 5}'
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+data = {"name": "Advanced Batch", "coach_id": 5}
+
+response = requests.post(
+    "https://api.chessplay.io/api/v1/batches/",
+    headers=headers,
+    json=data
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 201 Created
+{
+  "id": 2,
+  "name": "Advanced Batch",
+  "coach": {...},
+  "students": [],
+  "student_count": 0
+}
+```
+
+</ResponseExample>
+
+<Warning>Admin only</Warning>

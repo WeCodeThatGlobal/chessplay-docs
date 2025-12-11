@@ -1,0 +1,60 @@
+---
+title: "Add Student to Batch"
+api: "POST /api/v1/batches/{id}/add-student/"
+description: "Add a student to a batch"
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  Batch ID
+</ParamField>
+
+## Body Parameters
+
+<ParamField body="student_id" type="integer" required>
+  Student ID to add
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.chessplay.io/api/v1/batches/1/add-student/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"student_id": 123}'
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+response = requests.post(
+    "https://api.chessplay.io/api/v1/batches/1/add-student/",
+    headers=headers,
+    json={"student_id": 123}
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Success
+{
+  "message": "Student added successfully",
+  "student": {
+    "id": 123,
+    "username": "FastMalamute",
+    "name": "John Doe"
+  }
+}
+```
+
+```json 400 Bad Request
+{
+  "error": "Student is already in this batch"
+}
+```
+
+</ResponseExample>

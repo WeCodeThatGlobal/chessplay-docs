@@ -1,0 +1,175 @@
+---
+title: Error Handling
+description: 'Common errors and how to fix them'
+---
+
+## Error Format
+
+All errors return JSON:
+
+```json
+{
+  "error": "Error message",
+  "detail": "More details"
+}
+```
+
+Or for validation errors:
+
+```json
+{
+  "field_name": ["Error message"],
+  "email": ["This field is required."]
+}
+```
+
+## Common Errors
+
+### 400 Bad Request
+
+**Missing required fields:**
+
+```json
+{
+  "password": ["This field is required."]
+}
+```
+
+**Solution**: Check your request and include all required fields.
+
+**Duplicate username:**
+
+```json
+{
+  "username": ["This username is already taken in your organization."]
+}
+```
+
+**Solution**: Use a different username or let it auto-generate.
+
+### 401 Unauthorized
+
+**Missing token:**
+
+```json
+{
+  "detail": "Authentication credentials were not provided."
+}
+```
+
+**Solution**: Include `Authorization: Bearer YOUR_TOKEN` header.
+
+**Expired token:**
+
+```json
+{
+  "detail": "Token is expired"
+}
+```
+
+**Solution**: Use your refresh token to get a new access token.
+
+### 403 Forbidden
+
+**Insufficient permissions:**
+
+```json
+{
+  "detail": "You do not have permission to perform this action."
+}
+```
+
+**Solution**: Only admin users can create, update, or delete. Use an admin account.
+
+### 404 Not Found
+
+**Resource not found:**
+
+```json
+{
+  "detail": "Not found."
+}
+```
+
+**Solution**: Check the ID exists and belongs to your organization.
+
+## Example Error Handling
+
+<CodeGroup>
+
+```python Python
+import requests
+
+def create_student(token, data):
+    headers = {"Authorization": f"Bearer {token}"}
+
+    try:
+        response = requests.post(
+            "https://api.chessplay.io/api/v1/students/",
+            headers=headers,
+            json=data
+        )
+        response.raise_for_status()
+        return response.json()
+
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 400:
+            print(f"Validation error: {e.response.json()}")
+        elif e.response.status_code == 401:
+            print("Authentication failed. Login again.")
+        elif e.response.status_code == 403:
+            print("Need admin permissions.")
+        else:
+            print(f"Error: {e.response.status_code}")
+        return None
+```
+
+```javascript JavaScript
+async function createStudent(token, data) {
+  try {
+    const response = await fetch('https://api.chessplay.io/api/v1/students/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+
+      if (response.status === 400) {
+        console.error('Validation error:', error);
+      } else if (response.status === 401) {
+        console.error('Authentication failed. Login again.');
+      } else if (response.status === 403) {
+        console.error('Need admin permissions.');
+      }
+
+      throw new Error(error.detail || 'Request failed');
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+```
+
+</CodeGroup>
+
+## HTTP Status Codes
+
+| Code | Meaning |
+|------|---------|
+| 200 | Success |
+| 201 | Created |
+| 204 | Deleted |
+| 400 | Bad request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not found |
+| 500 | Server error |

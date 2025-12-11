@@ -1,0 +1,130 @@
+---
+title: Quick Start
+description: 'Create your first student in 3 steps'
+---
+
+## Create Your First Student
+
+<Steps>
+  <Step title="Get Your Token">
+    Login to get your JWT token:
+
+    ```bash
+    curl -X POST https://api.chessplay.io/api/token/ \
+      -H "Content-Type: application/json" \
+      -d '{"username": "admin_user", "password": "your_password"}'
+    ```
+
+    Save the `access` token.
+  </Step>
+
+  <Step title="Create a Student">
+    Use your token:
+
+    ```bash
+    curl -X POST https://api.chessplay.io/api/v1/students/ \
+      -H "Authorization: Bearer YOUR_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "username": "FastMalamute",
+        "email": "student@example.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "password": "secure_password"
+      }'
+    ```
+  </Step>
+
+  <Step title="Success!">
+    You'll get the created student:
+
+    ```json
+    {
+      "id": 123,
+      "username": "FastMalamute",
+      "email": "student@example.com",
+      "first_name": "John",
+      "last_name": "Doe"
+    }
+    ```
+  </Step>
+</Steps>
+
+## Complete Example
+
+<CodeGroup>
+
+```python Python
+import requests
+
+BASE_URL = "https://api.chessplay.io/api"
+
+# Login
+response = requests.post(f"{BASE_URL}/token/", json={
+    "username": "admin_user",
+    "password": "your_password"
+})
+token = response.json()["access"]
+
+# Create student
+headers = {"Authorization": f"Bearer {token}"}
+student = requests.post(
+    f"{BASE_URL}/v1/students/",
+    headers=headers,
+    json={
+        "username": "FastMalamute",
+        "email": "student@example.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "password": "secure_password"
+    }
+).json()
+
+print(f"Created: {student['username']}")
+```
+
+```javascript JavaScript
+const BASE_URL = "https://api.chessplay.io/api";
+
+// Login
+const loginRes = await fetch(`${BASE_URL}/token/`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    username: "admin_user",
+    password: "your_password"
+  })
+});
+const { access: token } = await loginRes.json();
+
+// Create student
+const studentRes = await fetch(`${BASE_URL}/v1/students/`, {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    email: "student@example.com",
+    first_name: "John",
+    last_name: "Doe",
+    password: "secure_password"
+  })
+});
+const student = await studentRes.json();
+
+console.log(`Created: ${student.username}`);
+```
+
+</CodeGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Students API" icon="user-graduate" href="/api-reference/students/list">
+    View all student endpoints
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation" href="/errors">
+    Learn about error handling
+  </Card>
+</CardGroup>

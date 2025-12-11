@@ -1,0 +1,55 @@
+---
+title: "Get Classroom"
+api: "GET /api/v1/classrooms/{id}/"
+description: "Retrieve a specific classroom"
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  Classroom ID
+</ParamField>
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.chessplay.io/api/v1/classrooms/1/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+```python Python
+import requests
+
+headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+response = requests.get(
+    "https://api.chessplay.io/api/v1/classrooms/1/",
+    headers=headers
+)
+classroom = response.json()
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.chessplay.io/api/v1/classrooms/1/', {
+  headers: { 'Authorization': 'Bearer YOUR_ACCESS_TOKEN' }
+});
+const classroom = await response.json();
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200 Success
+{
+  "id": 1,
+  "name": "Beginner Chess",
+  "description": "Introduction to chess",
+  "coach": {...},
+  "students": [...],
+  "start_time": "2024-01-20T10:00:00Z",
+  "end_time": "2024-01-20T11:00:00Z",
+  "created": "2024-01-15T10:30:00Z"
+}
+```
+
+</ResponseExample>
